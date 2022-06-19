@@ -34,4 +34,4 @@ pipeline:
                                     connectorRef: dbothwelldockerhub
                                     repo: dbothwell/gitexperienceexample
                                     tags:
-                                        - latest
+                                        - mnfb-latest
