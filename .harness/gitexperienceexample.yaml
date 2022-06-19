@@ -1,0 +1,37 @@
+pipeline:
+    name: git-experience-example
+    identifier: gitexperienceexample
+    projectIdentifier: dougproject
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: douglasjbothwellgithub
+                repoName: git-experience-example
+                build: <+input>
+    stages:
+        - stage:
+              name: pushToDockerHub
+              identifier: pushToDockerHub
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: docsgkedbothwellciquickstart
+                          namespace: harness-delegate-ng
+                          automountServiceAccountToken: true
+                          nodeSelector: {}
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: pushToDockerHub
+                                identifier: pushToDockerHub
+                                spec:
+                                    connectorRef: dbothwelldockerhub
+                                    repo: dbothwell/gitexperienceexample
+                                    tags:
+                                        - latest
